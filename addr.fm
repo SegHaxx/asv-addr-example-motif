@@ -1,0 +1,877 @@
+widget ApplicationShell {
+    flag {
+        mapped
+    }
+    resources {
+        x = 336
+        y = 83
+        width = 338
+        height = 449
+    }
+    children {
+        widget XmMainWindow {
+            flag {
+                mapped
+            }
+            activevalue {
+                name = MainWindowAV
+                get = @=self;
+            }
+            resources {
+                x = 0
+                y = 0
+                width = 338
+                height = 449
+            }
+            children {
+                widget XmRowColumn {
+                    flag {
+                        mapped
+                        menu_bar
+                    }
+                    resources {
+                        x = 0
+                        y = 0
+                        width = 338
+                        height = 34
+                    }
+                    children {
+                        widget XmRowColumn {
+                            flag {
+                                mapped
+                                menu_pulldown
+                            }
+                            resources {
+                                x = 0
+                                y = 0
+                                width = 138
+                                height = 92
+                            }
+                            children {
+                                widget XmPushButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 2
+                                        width = 134
+                                        height = 22
+                                        labelString = %MSG%2%3 Create new database
+                                        activateCallback = PopupAndWait(root.NewDatabaseShell);
+                                        fontList = *helvetica-*-r-*-12-*
+                                        mnemonic = %MSG%10%2 n
+                                    }
+                                } NewPushButton
+                                widget XmPushButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 24
+                                        width = 134
+                                        height = 22
+                                        labelString = %MSG%2%4 Open database
+                                        activateCallback = PopupAndWait(root.FileSelectorShell);
+                                        fontList = *helvetica-*-r-*-12-*
+                                        mnemonic = %MSG%10%3 O
+                                    }
+                                } OpenPushButton
+                                widget XmPushButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 46
+                                        width = 134
+                                        height = 22
+                                        labelString = %MSG%2%5 Close database
+                                        activateCallback = CloseDB();
+                                        fontList = *helvetica-*-r-*-12-*
+                                        mnemonic = %MSG%10%4 C
+                                    }
+                                } ClosePushButton
+                                widget XmPushButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 68
+                                        width = 134
+                                        height = 22
+                                        labelString = %MSG%2%6 Quit
+                                        activateCallback = QuitAddr(self);
+                                        fontList = *helvetica-*-r-*-12-*
+                                        mnemonic = %MSG%10%6 Q
+                                    }
+                                } QuitPushButton
+                            }
+                        } FilePulldownMenu
+                        widget XmCascadeButton {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 5
+                                y = 5
+                                width = 41
+                                height = 24
+                                subMenuId = parent.FilePulldownMenu
+                                labelString = %MSG%2%1 File
+                                mnemonic = %MSG%10%1 F
+                            }
+                        } FileCascadeButton
+                        widget XmRowColumn {
+                            flag {
+                                mapped
+                                menu_pulldown
+                            }
+                            resources {
+                                x = 0
+                                y = 0
+                                width = 124
+                                height = 64
+                            }
+                            children {
+                                widget XmToggleButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    activevalue {
+                                        name = AutomaticClearAV
+                                        get = @=self:set;
+                                        set = self:set=@;
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 2
+                                        width = 120
+                                        height = 30
+                                        fontList = *helvetica-bold-r-*-12-*
+                                        labelString = %MSG%2%7 Automatic Clear
+                                        disarmCallback = 
+                                        set = true
+                                        mnemonic = %MSG%10%10 A
+                                    }
+                                } AutomaticClear
+                                widget XmToggleButton {
+                                    flag {
+                                        mapped
+                                    }
+                                    activevalue {
+                                        name = ListButtonAV
+                                        get = @=self:set;
+                                        set = self:set=@;
+                                    }
+                                    resources {
+                                        x = 2
+                                        y = 32
+                                        width = 120
+                                        height = 30
+                                        disarmCallback = DoAddrListWindow();
+                                        fontList = *helvetica-*-r-*-12-*
+                                        mnemonic = %MSG%10%11 L
+                                        labelString = %MSG%2%8 Address List
+                                    }
+                                } ListButton
+                            }
+                        } OptionsMenu
+                        widget XmCascadeButton {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 46
+                                y = 5
+                                width = 72
+                                height = 24
+                                subMenuId = parent.OptionsMenu
+                                labelString = %MSG%2%2 Options
+                                mnemonic = %MSG%10%13 O
+                            }
+                        } OptionsCascadeButton
+                    }
+                } MenuBar
+                widget XmForm {
+                    flag {
+                        mapped
+                    }
+                    resources {
+                        x = 0
+                        y = 34
+                        width = 338
+                        height = 415
+                    }
+                    children {
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 20
+                                labelString = %MSG%3%1 Name:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } NameLabel
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 60
+                                labelString = %MSG%3%2 Street:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } StreetLabel
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 100
+                                labelString = %MSG%3%3 City:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } CityLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = NameAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 14
+                                width = 258
+                                height = 32
+                                rightAttachment = attach_form
+                                rightOffset = 10
+                                leftAttachment = attach_widget
+                                leftOffset = 18
+                                leftWidget = parent.NameLabel
+                            }
+                        } NameTextField
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = StreetAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 50
+                                width = 257
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 14
+                                leftWidget = parent.StreetLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } StreetTextField
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = CityAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 90
+                                width = 257
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 28
+                                leftWidget = parent.CityLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } CityTextField
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = StateAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 130
+                                width = 60
+                                height = 32
+                            }
+                        } StateTextField
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 210
+                                y = 140
+                                labelString = %MSG%3%5 ZIP:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } ZIPLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = ZIPAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 250
+                                y = 130
+                                width = 77
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 13
+                                leftWidget = parent.ZIPLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } ZIPTextField
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 180
+                                labelString = %MSG%3%6 Country:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } CountryLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = CountryAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 170
+                                width = 257
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 5
+                                leftWidget = parent.CountryLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } CountryTextField
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 220
+                                labelString = %MSG%3%7 Phone:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } PhoneLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = PhoneAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 210
+                                width = 257
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 16
+                                leftWidget = parent.PhoneLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } PhoneTextField
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 260
+                                labelString = %MSG%3%8 FAX:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } FAXLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = FAXAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 70
+                                y = 250
+                                width = 257
+                                height = 32
+                                leftAttachment = attach_widget
+                                leftOffset = 29
+                                leftWidget = parent.FAXLabel
+                                rightAttachment = attach_form
+                                rightOffset = 11
+                            }
+                        } FAXTextField
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 140
+                                labelString = %MSG%3%4 State:
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } StateLabel
+                        widget XmSeparator {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 0
+                                y = 296
+                                width = 338
+                                height = 2
+                                leftAttachment = attach_form
+                                rightAttachment = attach_form
+                            }
+                        } AddrFormSeparator
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 310
+                                labelString = %MSG%1%1 Add
+                                activateCallback = UpdateAv(NameAV);\
+AddButton(self);
+                            }
+                        } AddPushButton
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 270
+                                y = 311
+                                labelString = %MSG%1%5 Search
+                                activateCallback = UpdateAv(NameAV);\
+SearchButton(self);
+                            }
+                        } SearchPushButton
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 208
+                                y = 310
+                                labelString = %MSG%1%4 Clear
+                                activateCallback = ClearButton();
+                                rightAttachment = attach_form
+                                rightOffset = 81
+                                rightWidget = parent.SearchPushButton
+                            }
+                        } ClearPushButton
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 140
+                                y = 310
+                                labelString = %MSG%1%3 Delete
+                                rightAttachment = attach_widget
+                                rightOffset = 12
+                                rightWidget = parent.ClearPushButton
+                                activateCallback = PopupMessageAndWait(self, 199);
+                            }
+                        } DeletePushButton
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 65
+                                y = 310
+                                labelString = %MSG%1%2 Modify
+                                leftAttachment = attach_widget
+                                leftOffset = 15
+                                leftWidget = parent.AddPushButton
+                                rightAttachment = attach_widget
+                                rightOffset = 18
+                                rightWidget = parent.DeletePushButton
+                                activateCallback = PopupMessageAndWait(self, 198);
+                            }
+                        } ModifyPushButton
+                        widget XmSeparator {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 0
+                                y = 347
+                                width = 338
+                                height = 2
+                                leftAttachment = attach_form
+                                rightAttachment = attach_form
+                            }
+                        } AddrFormSeparator_2
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 356
+                                labelString = %MSG%4%1 Current DB:
+                            }
+                        } CurrentDBConstLabel
+                        widget XmLabel {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = CurrentDBAV
+                                get = @ = self:labelString;
+                                set = self:labelString = @;
+                            }
+                            resources {
+                                x = 94
+                                y = 356
+                                labelString = %MSG%4%2 None
+                                width = 200
+                                height = 21
+                                alignment = alignment_beginning
+                            }
+                        } CurrentDBLabel
+                        widget XmLabel {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = AddrFoundAV
+                                get = @=self:labelString;
+                                set = self:labelString=@;
+                            }
+                            resources {
+                                x = 10
+                                y = 383
+                                labelString = %MSG%4%2  ~
+                                alignment = alignment_beginning
+                                width = 280
+                                height = 21
+                            }
+                        } AddrFoundConstLabel
+                    }
+                } AddrForm
+            }
+        } AddrMainWindow
+        widget TopLevelShell {
+            flag {
+                popup
+            }
+            resources {
+                x = 468
+                y = 316
+                width = 278
+                height = 370
+            }
+            children {
+                widget XmFileSelectionBox {
+                    flag {
+                        mapped
+                    }
+                    activevalue {
+                        name = FileDirSpecAV
+                        get = @ = self:dirSpec;
+                        set = self:dirSpec = @;
+                    }
+                    resources {
+                        x = 0
+                        y = 0
+                        width = 278
+                        height = 370
+                        cancelCallback = Hide(parent);
+                        okCallback = UpdateAv(FileDirSpecAV);\
+OpenDB();\
+Hide(parent);
+                        dirMask = *.dat
+                    }
+                } FileSelectionBox
+            }
+        } FileSelectorShell
+        widget TopLevelShell {
+            flag {
+                popup
+            }
+            resources {
+                x = 308
+                y = 268
+                width = 242
+                height = 170
+                iconName = New Database
+            }
+            children {
+                widget XmForm {
+                    flag {
+                        mapped
+                    }
+                    resources {
+                        x = 0
+                        y = 0
+                        width = 242
+                        height = 170
+                    }
+                    children {
+                        widget XmLabel {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 10
+                                y = 8
+                                width = 231
+                                height = 65
+                                labelString = No database has been specified yet.\
+Open an existing one or create a\
+new one by typing in ist file name.
+                                alignment = alignment_beginning
+                                fontList = *helvetica-*-r-*-12-*
+                            }
+                        } NoDatabaseLabel
+                        widget XmLabel {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 80
+                                labelString = File name:
+                                fontList = *helvetica-bold-r-*-12-*
+                            }
+                        } NewDBFnameLabel
+                        widget XmTextField {
+                            flag {
+                                mapped
+                            }
+                            activevalue {
+                                name = NewDBFnameAV
+                                get = @ = self:value;
+                                set = self:value = @;
+                            }
+                            resources {
+                                x = 83
+                                y = 73
+                                width = 144
+                                height = 32
+                            }
+                        } NewDBFname
+                        widget XmSeparator {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 0
+                                y = 114
+                                width = 242
+                                height = 10
+                                leftAttachment = attach_form
+                                rightAttachment = attach_form
+                            }
+                        } NewDBSeparator
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 16
+                                y = 134
+                                labelString = Create
+                                activateCallback = UpdateAv(NewDBFnameAV);\
+CreateDB();\
+Hide(parent.parent);
+                            }
+                        } NewDBCreate
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 159
+                                y = 134
+                                labelString = Cancel
+                                activateCallback = Hide(parent.parent);
+                            }
+                        } NewDBCancel
+                    }
+                } NewDatabaseForm
+            }
+        } NewDatabaseShell
+        widget TopLevelShell {
+            flag {
+                popup
+            }
+            activevalue {
+                name = ListShellAV
+                get = @=self;
+            }
+            resources {
+                x = 295
+                y = 495
+                width = 456
+                height = 247
+                iconName = Address List
+            }
+            children {
+                widget XmForm {
+                    flag {
+                        mapped
+                    }
+                    resources {
+                        x = 0
+                        y = 0
+                        width = 456
+                        height = 247
+                        resizePolicy = resize_any
+                    }
+                    children {
+                        widget XmPushButton {
+                            flag {
+                                mapped
+                                autosize
+                            }
+                            resources {
+                                x = 10
+                                y = 209
+                                labelString = %MSG%8%1 Close
+                                activateCallback = ListCloseButton();
+                                bottomAttachment = attach_form
+                                bottomOffset = 10
+                            }
+                        } ListCloseButton
+                        widget XmSeparator {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 1
+                                y = 190
+                                width = 456
+                                height = 15
+                                leftAttachment = attach_form
+                                rightAttachment = attach_form
+                                leftOffset = 1
+                                rightOffset = -1
+                                bottomAttachment = attach_widget
+                                bottomOffset = 4
+                                bottomWidget = parent.ListCloseButton
+                            }
+                        } AddrListSeperator
+                        widget XmScrolledWindow {
+                            flag {
+                                mapped
+                            }
+                            resources {
+                                x = 0
+                                y = 0
+                                width = 456
+                                height = 177
+                                leftAttachment = attach_form
+                                rightAttachment = attach_form
+                                bottomAttachment = attach_widget
+                                topAttachment = attach_form
+                                bottomOffset = 13
+                                bottomWidget = parent.AddrListSeperator
+                            }
+                            children {
+                                widget XmList {
+                                    flag {
+                                        mapped
+                                    }
+                                    activevalue {
+                                        name = ListWidgetAV
+                                        get = @=self;
+                                    }
+                                    activevalue {
+                                        name = ListItemCountAV
+                                        get = @=self:itemCount;
+                                        set = self:itemCount=@;
+                                    }
+                                    activevalue {
+                                        name = ListItemAV
+                                        get = @=self:items;
+                                        set = self:items=@;
+                                    }
+                                    resources {
+                                        x = 0
+                                        y = 0
+                                        width = 439
+                                        height = 160
+                                        listSizePolicy = resize_if_possible
+                                        scrollBarDisplayPolicy = static
+                                        selectionPolicy = single_select
+                                        singleSelectionCallback = ListSelect(self:selectedItems);
+                                    }
+                                } AddrList
+                            }
+                        } ListScrolledWindow
+                    }
+                } ListForm
+            }
+        } ListTopLevelShell
+    }
+} AddrApplicationShell
+

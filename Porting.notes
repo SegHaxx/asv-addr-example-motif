@@ -1,0 +1,122 @@
+
+	Small Address
+
+	An example program showing how to port GEM programs from an Atari ST
+to an Atari TT running under Atari System V R.4.
+
+	This example is part of the "From TOS/GEM to ASV/X-Windows" document of
+the Atari System V developers documentation. The example consists of a small 
+address application which uses the main parts of a graphical user interface,
+like menus and windows.
+
+	Compiling 
+
+On the ST, the example was written using Mark Williams C. The source code
+is part of the developer's kit and to compile it, you just type "make" in 
+the Mark Williams shell. 
+
+To compile the Motif version, you have to type "make" and then "make install"
+which copies the FaceMaker file and the catalog files for global language
+support to the right places.
+
+	Running the Application
+
+	The application is simple to use. Just open or create a new database 
+using the "File" menu. On the ST you add an address by selecting the "Enter
+Address" menu entry. To search for an address you click 'Select' on the
+"Search Address" menu entry. Listing all addresses in a scrolled window is
+done by selecting the "List Addresses" menu button.
+
+	Under ASV you simply enter the address in the main window and then 
+click 'Select' on the "Add" button. To search for an address you enter the 
+name in the name text field and click 'Select' on the "Search" button. 
+Delete and modify are not implemented yet. With the "List Addresses" button 
+in the "Options" menu you have the ability to list all addresses in a 
+separate window. Opening and closing a database is done like on the ST.
+
+
+	Porting the Source Code
+
+	The ST program was split into several parts. There are two main
+parts, the database algorithms and the graphical user interface. The program
+uses a b-tree to manage the addresses. The algorithm was taken from N. Wirth's
+book "Algorithms and Data Structures" and converted to C. In the current
+implementation only inserting and searching is working. But the main goal
+of the program is to show how to port GEM programs to Motif and not to
+implement a database program.
+
+	To split the program into two parts was a big help. The data base 
+source needed nearly no changes. It just uses the standard C I/O functions
+and therefore was very compatible. The source code was transferred to the 
+TT using kermit. The main modification was to change the size of the buffers
+for file names. On the ST a buffer of 13 characters is enough but under ASV
+a file name can be up to 256 characters long. Also remember, that "int" is
+now 32-bit wide.
+
+	The user interface on the ST was written using an own written GEM
+library. The source of the library is part of the package and is divided into
+the main GEM functionality fields, e.g. windows, menus and forms. The user
+interface was designed with the help of the resource construction set.
+
+	The port of the user interface cannot be done by transferring the
+source code to the TT and recompiling it. You can just port the appearance, 
+the look and feel, of your application but not the graphical user interface, 
+since the ST uses GEM and the TT under ASV uses Motif. Another important 
+thing to think of is that your ported application will be running under a 
+multitasking environment.
+
+	Before you start your port, you should get familiar with UNIX, the
+X Window System, Motif and FaceMaker. You can compare FaceMaker with the
+resource construction set on the ST, except that it is much more advanced. 
+It makes programming under X a lot easier.
+
+	Because of the fact that X runs in a multitasking environment there is
+no desktop with a single menu bar. Menu bars are part of the windows. So the
+most often used window/form of the application should be chosen and be put 
+together with the menu bar inside a window. In case of the address application
+that is the form where the user enters addresses. Using FaceMaker, a window
+was designed which contains the menu bar, the form with text fields for an
+address, command buttons and a message line. So the two forms which exist in
+the ST implementation, one for entering an address and one for searching and
+modifying an address, were merged into one.
+
+	This main window of the Motif application consists of a
+toplevel shell widget which contains an XmMainWindow widget. Inside the
+XmMainWindow there is the menu bar and the form (XmForm). The form is the
+container widget for the text input fields, labels and buttons. The menu and
+the push buttons are the interface to the application. For each button you
+can specify an activate callback in FaceMaker. In these activate callbacks you
+can call a function in your application which reacts to the user action.
+
+	So for example, the user clicks 'Select' on the "Add" push button to
+add an address to the database. The activate callback script calls the
+"AddButton" function in the application which then will take the entered data
+from the text input fields and adds them to the database. To get the data
+from the text fields, active values are used. See the FaceMaker manual for a
+description of active values.
+
+	The list window was easy to do. An XmList is used to present the data. 
+The XmList widget was put inside a scrolled window (XmScrolledWindow). The
+advantage is that Motif does things like scrolling and resizing automatically.
+So there is no work for the programmer. The addresses are added to the list
+using the XmListAddItemUnselected call. 
+
+	If your application is more complex, like a drawing program or a
+word processor, things get complicated again. You will have to define what 
+X calls a Graphics Context. Here it is your job again to do the redrawing.
+
+	To pop up error and alert messages you should use the AtariLib. It
+provides a set of functions to pop up Motif dialog boxes. The AtariLib 
+functions are explained in the developer's documentation.
+
+	Please always remember to internationalize your application. With
+the global language support of ASV it was never easier to do. Also, provide
+an online help system for the user. This is missing in the example but should
+be part of your application. To help to make this computer most user friendly,
+follow the Motif and ASV style guides. The users will thank you.
+
+	The example will show you how to use FaceMaker and Motif. You should 
+get a first impression of how to program under Motif and how to port your 
+porgrams to this new powerful user interface.
+
+Happy porting!
