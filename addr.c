@@ -31,7 +31,28 @@
 /*
  *	Filename of the FM file
  */
-#define FmFILE		"addr.fm"
+#define FmFILE		"/usr/lib/AtariExample/Fm/addr.fm"
+
+/*
+ *      NLSPATH and XBMLANGPATH environment variable defines
+ */
+#define NLSPATH                 "NLSPATH"
+#define NLSPATH_DELIMITER       ':'
+#define XBMLANGPATH             "XBMLANGPATH"
+#define XBMLANGPATH_DELIMITER   ':'
+
+static char *nls_path[] = {
+        "/usr/lib/AtariExample/gls/%c/%t/%l/%N.cat",
+        "/usr/lib/AtariExample/gls/%t/%l/%N.cat",
+        "/usr/lib/AtariExample/gls/%l/%N.cat",
+        "/usr/lib/AtariExample/gls/%N.cat",
+        NULL
+};
+static char *xbm_lang_path[] = {
+        "/usr/lib/AtariExample/bitmaps/%B",
+        "/usr/include/X11/bitmaps/%B",
+        NULL
+};
 
 /*
  *	length of a line in the list window
@@ -152,7 +173,16 @@ char	**argv;
 	/*
 	 *	init FaceMaker & AtariLib (needed for alert boxes etc.)
 	 */
-	LogOpen("stdout");	/* log to stdout (AtariLib) */
+	LogOpen("addr");	/* log to logfile (AtariLib) */
+
+	/*
+	 *	Add directories to the environment variables,
+	 *	so that the files are found (.fm and .cat)
+	 */
+	AddPathV(XBMLANGPATH,xbm_lang_path,XBMLANGPATH_DELIMITER,TRUE);
+        AddPathV(NLSPATH,nls_path,NLSPATH_DELIMITER,TRUE);
+
+
 	AtariLibInit(FmInitialize("addr", "Addr", NULL, 0, &argc, argv));
 
 	/*
@@ -174,7 +204,7 @@ char	**argv;
 	/*
 	 *	init AtariLib alert fcts
 	 */
-	shortname = strdup(FmCatGetS(100, 1, "addr"));
+	shortname = strdup(FmCatGetS(100, 1, "Addr"));
 	if (shortname == NULL)  {
 		LogWrite ("Addr main: Cannot allocate short name.\n");
 		exit (1);
@@ -919,4 +949,3 @@ register int	n;
 
 	return s;
 }
-

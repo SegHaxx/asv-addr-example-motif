@@ -5,7 +5,7 @@
 
 CFLAGS =-DDEBUG=1 -DSYSV
 OBJ = 	addr.o addrdb.o
-LIB = 	-lFm -lmalloc -lgls -lMrm -lXm -lXt -lX11\
+LIB = 	-lFm -lmalloc -lXm -lXt -lX11\
 	-lsocket -lsockhost -lnsl -lgen -lAtari
 
 all:	addr addr.cat
@@ -16,8 +16,12 @@ addr: $(OBJ)
 addr.cat: addr.msg addrapp.msg
 	rm -f addr.cat
 	gencat addr.cat addr.msg addrapp.msg
-
+#
+#	Note: If you do a real software product, you have
+#	to package it (see System V.4 documentation). This
+#	is just a quick and dirty way. Do NOT do it like this.
+#
+#	You probably have to be root for this action!
+#
 install:
-	cp addr.fm /usr/lib/X11/Atari/Fm
-	cp addr.cat addr.cat.m /usr/lib/X11/Atari/gls
-
+	sh install.sh
